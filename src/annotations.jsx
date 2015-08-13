@@ -14,7 +14,7 @@ class Annotations extends React.Component {
 	renderAnnotation(annotation, i) {
 		return annotation.type.name === "elab4:entrylink" ?
 			(<div className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
-				<a onClick={this.navigateToResult.bind(this, annotation.text)}>Gerelateerd aan</a>
+				<a onClick={this.navigateToResult.bind(this, annotation.text)}>{this.props.relatedLabel}</a>
 			</div>)
 			:
 			(<div className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
@@ -34,9 +34,8 @@ class Annotations extends React.Component {
 Annotations.propTypes = {
 	data: React.PropTypes.array,
 	highlighted: React.PropTypes.string,
-	onNavigation: React.PropTypes.func
+	onNavigation: React.PropTypes.func,
+	relatedLabel: React.PropTypes.string
 };
-
-
 
 export default Annotations;

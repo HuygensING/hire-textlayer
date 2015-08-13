@@ -62,7 +62,11 @@ class TextLayer extends React.Component {
 
 	render() {
 		let annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? 
-			(<Annotations data={this.props.data.annotationData} highlighted={this.state.highlightedAnnotation} onNavigation={this.props.onNavigation} />) :
+			(<Annotations 
+				data={this.props.data.annotationData} 
+				highlighted={this.state.highlightedAnnotation}
+				onNavigation={this.props.onNavigation}
+				relatedLabel={this.props.relatedAnnotationLabel}  />) :
 			"";
 
 		return (
@@ -80,11 +84,13 @@ class TextLayer extends React.Component {
 TextLayer.propTypes = {
 	data: React.PropTypes.object,
 	label: React.PropTypes.string,
-	onNavigation: React.PropTypes.func
+	onNavigation: React.PropTypes.func,
+	relatedAnnotationLabel: React.PropTypes.string
 };
 
 TextLayer.defaultProps = {
-	onNavigation: null
+	onNavigation: null,
+	relatedAnnotationLabel: "Gerelateerd aan"
 };
 
 export default TextLayer;
