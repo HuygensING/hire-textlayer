@@ -7,4 +7,5 @@ node_modules/.bin/watchify src/index.jsx \
   --outfile 'node_modules/.bin/derequire > build/index.js' \
   --standalone ReactTextLayer \
   --transform [ babelify ] \
+  -t brfs \
   --verbose

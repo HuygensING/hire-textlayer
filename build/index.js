@@ -152,7 +152,7 @@ FeedHandler.prototype.onend = function(){
 
 module.exports = FeedHandler;
 
-},{"./index.js":8,"util":59}],3:[function(_dereq_,module,exports){
+},{"./index.js":8,"util":60}],3:[function(_dereq_,module,exports){
 var Tokenizer = _dereq_("./Tokenizer.js");
 
 /*
@@ -504,7 +504,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":6,"events":40,"util":59}],4:[function(_dereq_,module,exports){
+},{"./Tokenizer.js":6,"events":41,"util":60}],4:[function(_dereq_,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs){
@@ -568,7 +568,7 @@ Object.keys(EVENTS).forEach(function(name){
 		throw Error("wrong number of arguments!");
 	}
 });
-},{"../":8,"./WritableStream.js":7,"util":59}],6:[function(_dereq_,module,exports){
+},{"../":8,"./WritableStream.js":7,"util":60}],6:[function(_dereq_,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = _dereq_("entities/lib/decode_codepoint.js"),
@@ -1498,7 +1498,7 @@ WritableStream.prototype._write = function(chunk, encoding, cb){
 	this._parser.write(chunk);
 	cb();
 };
-},{"./Parser.js":3,"readable-stream":35,"stream":56,"util":59}],8:[function(_dereq_,module,exports){
+},{"./Parser.js":3,"readable-stream":36,"stream":57,"util":60}],8:[function(_dereq_,module,exports){
 var Parser = _dereq_("./Parser.js"),
     DomHandler = _dereq_("domhandler");
 
@@ -2736,8 +2736,32 @@ arguments[4][28][0].apply(exports,arguments)
 },{"dup":28}],34:[function(_dereq_,module,exports){
 arguments[4][29][0].apply(exports,arguments)
 },{"dup":29}],35:[function(_dereq_,module,exports){
+var inserted = {};
+
+module.exports = function (css, options) {
+    if (inserted[css]) return;
+    inserted[css] = true;
+    
+    var elem = document.createElement('style');
+    elem.setAttribute('type', 'text/css');
+
+    if ('textContent' in elem) {
+      elem.textContent = css;
+    } else {
+      elem.styleSheet.cssText = css;
+    }
+    
+    var head = document.getElementsByTagName('head')[0];
+    if (options && options.prepend) {
+        head.insertBefore(elem, head.childNodes[0]);
+    } else {
+        head.appendChild(elem);
+    }
+};
 
 },{}],36:[function(_dereq_,module,exports){
+
+},{}],37:[function(_dereq_,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -4259,7 +4283,7 @@ function blitBuffer (src, dst, offset, length) {
   return i
 }
 
-},{"base64-js":37,"ieee754":38,"is-array":39}],37:[function(_dereq_,module,exports){
+},{"base64-js":38,"ieee754":39,"is-array":40}],38:[function(_dereq_,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -4385,7 +4409,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],38:[function(_dereq_,module,exports){
+},{}],39:[function(_dereq_,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -4471,7 +4495,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],39:[function(_dereq_,module,exports){
+},{}],40:[function(_dereq_,module,exports){
 
 /**
  * isArray
@@ -4506,7 +4530,7 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],40:[function(_dereq_,module,exports){
+},{}],41:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4809,7 +4833,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],41:[function(_dereq_,module,exports){
+},{}],42:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -4834,15 +4858,15 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],42:[function(_dereq_,module,exports){
+},{}],43:[function(_dereq_,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],43:[function(_dereq_,module,exports){
+},{}],44:[function(_dereq_,module,exports){
 module.exports = _dereq_("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":44}],44:[function(_dereq_,module,exports){
+},{"./lib/_stream_duplex.js":45}],45:[function(_dereq_,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -4926,7 +4950,7 @@ function forEach (xs, f) {
   }
 }
 
-},{"./_stream_readable":46,"./_stream_writable":48,"core-util-is":49,"inherits":41,"process-nextick-args":50}],45:[function(_dereq_,module,exports){
+},{"./_stream_readable":47,"./_stream_writable":49,"core-util-is":50,"inherits":42,"process-nextick-args":51}],46:[function(_dereq_,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -4955,7 +4979,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"./_stream_transform":47,"core-util-is":49,"inherits":41}],46:[function(_dereq_,module,exports){
+},{"./_stream_transform":48,"core-util-is":50,"inherits":42}],47:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = Readable;
@@ -5916,7 +5940,7 @@ function indexOf (xs, x) {
   return -1;
 }
 
-},{"./_stream_duplex":44,"buffer":36,"core-util-is":49,"events":40,"inherits":41,"isarray":42,"process-nextick-args":50,"string_decoder/":57,"util":35}],47:[function(_dereq_,module,exports){
+},{"./_stream_duplex":45,"buffer":37,"core-util-is":50,"events":41,"inherits":42,"isarray":43,"process-nextick-args":51,"string_decoder/":58,"util":36}],48:[function(_dereq_,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -6115,7 +6139,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":44,"core-util-is":49,"inherits":41}],48:[function(_dereq_,module,exports){
+},{"./_stream_duplex":45,"core-util-is":50,"inherits":42}],49:[function(_dereq_,module,exports){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, cb), and it'll handle all
 // the drain event emission and buffering.
@@ -6637,7 +6661,7 @@ function endWritable(stream, state, cb) {
   state.ended = true;
 }
 
-},{"./_stream_duplex":44,"buffer":36,"core-util-is":49,"events":40,"inherits":41,"process-nextick-args":50,"util-deprecate":51}],49:[function(_dereq_,module,exports){
+},{"./_stream_duplex":45,"buffer":37,"core-util-is":50,"events":41,"inherits":42,"process-nextick-args":51,"util-deprecate":52}],50:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6745,7 +6769,7 @@ exports.isBuffer = isBuffer;
 function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
-},{}],50:[function(_dereq_,module,exports){
+},{}],51:[function(_dereq_,module,exports){
 'use strict';
 module.exports = nextTick;
 
@@ -6760,7 +6784,7 @@ function nextTick(fn) {
   });
 }
 
-},{}],51:[function(_dereq_,module,exports){
+},{}],52:[function(_dereq_,module,exports){
 
 /**
  * Module exports.
@@ -6824,10 +6848,10 @@ function config (name) {
   return String(val).toLowerCase() === 'true';
 }
 
-},{}],52:[function(_dereq_,module,exports){
+},{}],53:[function(_dereq_,module,exports){
 module.exports = _dereq_("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":45}],53:[function(_dereq_,module,exports){
+},{"./lib/_stream_passthrough.js":46}],54:[function(_dereq_,module,exports){
 var Stream = (function (){
   try {
     return _dereq_('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
@@ -6841,13 +6865,13 @@ exports.Duplex = _dereq_('./lib/_stream_duplex.js');
 exports.Transform = _dereq_('./lib/_stream_transform.js');
 exports.PassThrough = _dereq_('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":44,"./lib/_stream_passthrough.js":45,"./lib/_stream_readable.js":46,"./lib/_stream_transform.js":47,"./lib/_stream_writable.js":48}],54:[function(_dereq_,module,exports){
+},{"./lib/_stream_duplex.js":45,"./lib/_stream_passthrough.js":46,"./lib/_stream_readable.js":47,"./lib/_stream_transform.js":48,"./lib/_stream_writable.js":49}],55:[function(_dereq_,module,exports){
 module.exports = _dereq_("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":47}],55:[function(_dereq_,module,exports){
+},{"./lib/_stream_transform.js":48}],56:[function(_dereq_,module,exports){
 module.exports = _dereq_("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":48}],56:[function(_dereq_,module,exports){
+},{"./lib/_stream_writable.js":49}],57:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6976,7 +7000,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":40,"inherits":41,"readable-stream/duplex.js":43,"readable-stream/passthrough.js":52,"readable-stream/readable.js":53,"readable-stream/transform.js":54,"readable-stream/writable.js":55}],57:[function(_dereq_,module,exports){
+},{"events":41,"inherits":42,"readable-stream/duplex.js":44,"readable-stream/passthrough.js":53,"readable-stream/readable.js":54,"readable-stream/transform.js":55,"readable-stream/writable.js":56}],58:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7199,14 +7223,14 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":36}],58:[function(_dereq_,module,exports){
+},{"buffer":37}],59:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],59:[function(_dereq_,module,exports){
+},{}],60:[function(_dereq_,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -7794,7 +7818,7 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-},{"./support/isBuffer":58,"inherits":41}],60:[function(_dereq_,module,exports){
+},{"./support/isBuffer":59,"inherits":42}],61:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7814,6 +7838,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _react = _dereq_("react");
 
 var _react2 = _interopRequireDefault(_react);
+
+var HIGHLIGHT_CLASSNAME = "hi-annotation-highlight";
 
 var Annotations = (function (_React$Component) {
 	_inherits(Annotations, _React$Component);
@@ -7836,7 +7862,7 @@ var Annotations = (function (_React$Component) {
 		value: function renderAnnotation(annotation, i) {
 			return annotation.type.name === "elab4:entrylink" ? _react2["default"].createElement(
 				"div",
-				{ className: this.props.highlighted == annotation.n ? "highlighted" : null, id: annotation.n, key: i },
+				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
 				_react2["default"].createElement(
 					"a",
 					{ onClick: this.navigateToResult.bind(this, annotation.text) },
@@ -7844,7 +7870,7 @@ var Annotations = (function (_React$Component) {
 				)
 			) : _react2["default"].createElement(
 				"div",
-				{ className: this.props.highlighted == annotation.n ? "highlighted" : null, id: annotation.n, key: i },
+				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
 				_react2["default"].createElement(
 					"em",
 					null,
@@ -7859,7 +7885,7 @@ var Annotations = (function (_React$Component) {
 		value: function render() {
 			return _react2["default"].createElement(
 				"div",
-				{ className: "annotations" },
+				{ className: "hi-annotations" },
 				this.props.data.map(this.renderAnnotation.bind(this))
 			);
 		}
@@ -7877,7 +7903,7 @@ Annotations.propTypes = {
 exports["default"] = Annotations;
 module.exports = exports["default"];
 
-},{"react":"react"}],61:[function(_dereq_,module,exports){
+},{"react":"react"}],62:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7944,7 +7970,32 @@ var elabHtmlParser = function elabHtmlParser(html) {
 exports["default"] = elabHtmlParser;
 module.exports = exports["default"];
 
-},{"htmlparser2":8}],62:[function(_dereq_,module,exports){
+},{"htmlparser2":8}],63:[function(_dereq_,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _textLayer = _dereq_("./text-layer");
+
+var _textLayer2 = _interopRequireDefault(_textLayer);
+
+var _insertCss = _dereq_("insert-css");
+
+var _insertCss2 = _interopRequireDefault(_insertCss);
+
+
+
+var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9CgouaGktYW5ub3RhdGlvbnMgKiB7Cgl0cmFuc2l0aW9uOiBiYWNrZ3JvdW5kLWNvbG9yIDAuNHMKfQo=","base64");
+(0, _insertCss2["default"])(css, { prepend: true });
+
+exports["default"] = _textLayer2["default"];
+module.exports = exports["default"];
+
+},{"./text-layer":64,"insert-css":35}],64:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7972,6 +8023,8 @@ var _htmlParser2 = _interopRequireDefault(_htmlParser);
 var _annotations = _dereq_("./annotations");
 
 var _annotations2 = _interopRequireDefault(_annotations);
+
+var HIGHLIGHT_CLASSNAME = "hi-text-highlight";
 
 var TextLayer = (function (_React$Component) {
 	_inherits(TextLayer, _React$Component);
@@ -8001,7 +8054,7 @@ var TextLayer = (function (_React$Component) {
 	}, {
 		key: "renderNode",
 		value: function renderNode(node, i) {
-			var className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ? "highlighted" : null;
+			var className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ? HIGHLIGHT_CLASSNAME : null;
 			if (node.textContent) {
 				return _react2["default"].createElement(
 					"span",
@@ -8099,5 +8152,5 @@ TextLayer.defaultProps = {
 exports["default"] = TextLayer;
 module.exports = exports["default"];
 
-},{"./annotations":60,"./html-parser":61,"react":"react"}]},{},[62])(62)
+},{"./annotations":61,"./html-parser":62,"react":"react"}]},{},[63])(63)
 });
