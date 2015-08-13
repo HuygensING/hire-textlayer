@@ -7266,7 +7266,7 @@ exports.format = function(f) {
   var args = arguments;
   var len = args.length;
   var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
+    if (x === '%') return '%';
     if (i >= len) return x;
     switch (x) {
       case '%s': return String(args[i++]);
@@ -7866,7 +7866,7 @@ var Annotations = (function (_React$Component) {
 				_react2["default"].createElement(
 					"a",
 					{ onClick: this.navigateToResult.bind(this, annotation.text) },
-					"Gerelateerd aan"
+					this.props.relatedLabel
 				)
 			) : _react2["default"].createElement(
 				"div",
@@ -7897,7 +7897,8 @@ var Annotations = (function (_React$Component) {
 Annotations.propTypes = {
 	data: _react2["default"].PropTypes.array,
 	highlighted: _react2["default"].PropTypes.string,
-	onNavigation: _react2["default"].PropTypes.func
+	onNavigation: _react2["default"].PropTypes.func,
+	relatedLabel: _react2["default"].PropTypes.string
 };
 
 exports["default"] = Annotations;
@@ -8116,7 +8117,11 @@ var TextLayer = (function (_React$Component) {
 	}, {
 		key: "render",
 		value: function render() {
-			var annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? _react2["default"].createElement(_annotations2["default"], { data: this.props.data.annotationData, highlighted: this.state.highlightedAnnotation, onNavigation: this.props.onNavigation }) : "";
+			var annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? _react2["default"].createElement(_annotations2["default"], {
+				data: this.props.data.annotationData,
+				highlighted: this.state.highlightedAnnotation,
+				onNavigation: this.props.onNavigation,
+				relatedLabel: this.props.relatedAnnotationLabel }) : "";
 
 			return _react2["default"].createElement(
 				"div",
@@ -8142,11 +8147,13 @@ var TextLayer = (function (_React$Component) {
 TextLayer.propTypes = {
 	data: _react2["default"].PropTypes.object,
 	label: _react2["default"].PropTypes.string,
-	onNavigation: _react2["default"].PropTypes.func
+	onNavigation: _react2["default"].PropTypes.func,
+	relatedAnnotationLabel: _react2["default"].PropTypes.string
 };
 
 TextLayer.defaultProps = {
-	onNavigation: null
+	onNavigation: null,
+	relatedAnnotationLabel: "Gerelateerd aan"
 };
 
 exports["default"] = TextLayer;
