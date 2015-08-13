@@ -1,3 +1,6 @@
+### v1.1.1	(2015/8/13 15:12)
+* moved hard string to prop relatedAnnotationLabel
+
 ### v1.1.0	(2015/8/13 14:55)
 * added styles
 * changed sample-data
