@@ -1,3 +1,7 @@
+### v1.1.2	(2015/8/13 15:20)
+* reran build
+* reran build
+
 ### v1.1.1	(2015/8/13 15:12)
 * moved hard string to prop relatedAnnotationLabel
 
