@@ -34,7 +34,7 @@ class TextLayer extends React.Component {
 				case "sup":
 					if(node.attributes['data-id']) {
 						return (
-							<sup key={i}>
+							<sup key={i} id={node.attributes['data-id'] + "-text"} >
 								<a href={"#" + node.attributes['data-id']}
 									onMouseOut={this.unHighlightAnnotation.bind(this)}
 									onMouseOver={this.highlightAnnotation.bind(this, node.attributes['data-id'])}>
@@ -65,6 +65,7 @@ class TextLayer extends React.Component {
 			(<Annotations 
 				data={this.props.data.annotationData} 
 				highlighted={this.state.highlightedAnnotation}
+				onHover={this.highlightAnnotation.bind(this)}
 				onNavigation={this.props.onNavigation}
 				relatedLabel={this.props.relatedAnnotationLabel}  />) :
 			"";

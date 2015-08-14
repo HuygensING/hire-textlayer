@@ -7266,7 +7266,7 @@ exports.format = function(f) {
   var args = arguments;
   var len = args.length;
   var str = String(f).replace(formatRegExp, function(x) {
-    if (x === '%%') return '%';
+    if (x === '%') return '%';
     if (i >= len) return x;
     switch (x) {
       case '%s': return String(args[i++]);
@@ -7858,19 +7858,22 @@ var Annotations = (function (_React$Component) {
 			}
 		}
 	}, {
+		key: "onHover",
+		value: function onHover(annotationId) {
+			if (this.props.onHover) {
+				this.props.onHover("" + annotationId);
+			}
+		}
+	}, {
 		key: "renderAnnotation",
 		value: function renderAnnotation(annotation, i) {
-			return annotation.type.name === "elab4:entrylink" ? _react2["default"].createElement(
-				"li",
-				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
-				_react2["default"].createElement(
-					"a",
-					{ onClick: this.navigateToResult.bind(this, annotation.text) },
-					this.props.relatedLabel
-				)
+			var inner = annotation.type.name === "elab4:entrylink" ? _react2["default"].createElement(
+				"a",
+				{ onClick: this.navigateToResult.bind(this, annotation.text) },
+				this.props.relatedLabel
 			) : _react2["default"].createElement(
-				"li",
-				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
+				"a",
+				{ href: "#" + annotation.n + "-text" },
 				_react2["default"].createElement(
 					"em",
 					null,
@@ -7878,6 +7881,16 @@ var Annotations = (function (_React$Component) {
 				),
 				", ",
 				_react2["default"].createElement("span", { dangerouslySetInnerHTML: { __html: annotation.text } })
+			);
+
+			return _react2["default"].createElement(
+				"li",
+				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null,
+					id: annotation.n,
+					key: i,
+					onMouseOut: this.onHover.bind(this, ""),
+					onMouseOver: this.onHover.bind(this, annotation.n) },
+				inner
 			);
 		}
 	}, {
@@ -7897,6 +7910,7 @@ var Annotations = (function (_React$Component) {
 Annotations.propTypes = {
 	data: _react2["default"].PropTypes.array,
 	highlighted: _react2["default"].PropTypes.string,
+	onHover: _react2["default"].PropTypes.func,
 	onNavigation: _react2["default"].PropTypes.func,
 	relatedLabel: _react2["default"].PropTypes.string
 };
@@ -7990,7 +8004,7 @@ var _insertCss2 = _interopRequireDefault(_insertCss);
 
 
 
-var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9CgouaGktYW5ub3RhdGlvbnMgKiB7Cgl0cmFuc2l0aW9uOiBiYWNrZ3JvdW5kLWNvbG9yIDAuNHMKfQo=","base64");
+var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9Cg==","base64");
 (0, _insertCss2["default"])(css, { prepend: true });
 
 exports["default"] = _textLayer2["default"];
@@ -8068,7 +8082,7 @@ var TextLayer = (function (_React$Component) {
 						if (node.attributes['data-id']) {
 							return _react2["default"].createElement(
 								"sup",
-								{ key: i },
+								{ key: i, id: node.attributes['data-id'] + "-text" },
 								_react2["default"].createElement(
 									"a",
 									{ href: "#" + node.attributes['data-id'],
@@ -8120,6 +8134,7 @@ var TextLayer = (function (_React$Component) {
 			var annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? _react2["default"].createElement(_annotations2["default"], {
 				data: this.props.data.annotationData,
 				highlighted: this.state.highlightedAnnotation,
+				onHover: this.highlightAnnotation.bind(this),
 				onNavigation: this.props.onNavigation,
 				relatedLabel: this.props.relatedAnnotationLabel }) : "";
 
