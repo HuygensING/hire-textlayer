@@ -1,3 +1,6 @@
+### v1.3.0	(2015/8/14 14:48)
+* link to other entry within text
+
 ### v1.2.0	(2015/8/14 14:5)
 * 2-way annotation highlight
 * 2-way annotation highlight
