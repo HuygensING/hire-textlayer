@@ -1,3 +1,6 @@
+### v1.3.1	(2015/8/14 14:55)
+* bugfix annotationData in componentwillreceivenewprops
+
 ### v1.3.0	(2015/8/14 14:48)
 * link to other entry within text
 
