@@ -1,3 +1,6 @@
+### v1.1.4	(2015/8/14 9:20)
+* changed div into ol
+
 ### v1.1.3	(2015/8/14 9:17)
 * changed div into ol
 
