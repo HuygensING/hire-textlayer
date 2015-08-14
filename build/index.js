@@ -7861,7 +7861,7 @@ var Annotations = (function (_React$Component) {
 		key: "renderAnnotation",
 		value: function renderAnnotation(annotation, i) {
 			return annotation.type.name === "elab4:entrylink" ? _react2["default"].createElement(
-				"div",
+				"li",
 				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
 				_react2["default"].createElement(
 					"a",
@@ -7869,7 +7869,7 @@ var Annotations = (function (_React$Component) {
 					this.props.relatedLabel
 				)
 			) : _react2["default"].createElement(
-				"div",
+				"li",
 				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null, id: annotation.n, key: i },
 				_react2["default"].createElement(
 					"em",
@@ -7884,7 +7884,7 @@ var Annotations = (function (_React$Component) {
 		key: "render",
 		value: function render() {
 			return _react2["default"].createElement(
-				"div",
+				"ol",
 				{ className: "hi-annotations" },
 				this.props.data.map(this.renderAnnotation.bind(this))
 			);
