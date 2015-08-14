@@ -1,3 +1,7 @@
+### v1.2.0	(2015/8/14 14:5)
+* 2-way annotation highlight
+* 2-way annotation highlight
+
 ### v1.1.4	(2015/8/14 9:20)
 * changed div into ol
 
