@@ -13,20 +13,20 @@ class Annotations extends React.Component {
 
 	renderAnnotation(annotation, i) {
 		return annotation.type.name === "elab4:entrylink" ?
-			(<div className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
+			(<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
 				<a onClick={this.navigateToResult.bind(this, annotation.text)}>{this.props.relatedLabel}</a>
-			</div>)
+			</li>)
 			:
-			(<div className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
+			(<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} id={annotation.n} key={i}>
 				<em>{annotation.type.name}</em>, <span dangerouslySetInnerHTML={{__html: annotation.text}} />
-			</div>);
+			</li>);
 	}
 
 	render() {
 		return (
-			<div className="hi-annotations">
+			<ol className="hi-annotations">
 				{this.props.data.map(this.renderAnnotation.bind(this))}
-			</div>
+			</ol>
 		)
 	}
 }
