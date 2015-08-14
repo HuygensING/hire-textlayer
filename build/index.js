@@ -8004,7 +8004,7 @@ var _insertCss2 = _interopRequireDefault(_insertCss);
 
 
 
-var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9Cg==","base64");
+var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9CgouaGktdGV4dGxheWVyIGEgewoJdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7CgljdXJzb3I6IHBvaW50ZXI7Cn0=","base64");
 (0, _insertCss2["default"])(css, { prepend: true });
 
 exports["default"] = _textLayer2["default"];
@@ -8048,13 +8048,21 @@ var TextLayer = (function (_React$Component) {
 		_classCallCheck(this, TextLayer);
 
 		_get(Object.getPrototypeOf(TextLayer.prototype), "constructor", this).call(this, props);
-		this.state = { rootNode: (0, _htmlParser2["default"])(this.props.data.text), highlightedAnnotation: null };
+		this.state = {
+			rootNode: (0, _htmlParser2["default"])(this.props.data.text),
+			highlightedAnnotation: null,
+			annotationData: this.props.data.annotationData
+		};
 	}
 
 	_createClass(TextLayer, [{
 		key: "componentWillReceiveProps",
 		value: function componentWillReceiveProps(newProps) {
-			this.setState({ rootNode: (0, _htmlParser2["default"])(newProps.data.text), highlightedAnnotation: null });
+			this.setState({
+				rootNode: (0, _htmlParser2["default"])(newProps.data.text),
+				highlightedAnnotation: null,
+				annotationData: this.props.data.annotationData
+			});
 		}
 	}, {
 		key: "unHighlightAnnotation",
@@ -8067,13 +8075,38 @@ var TextLayer = (function (_React$Component) {
 			this.setState({ highlightedAnnotation: annotation });
 		}
 	}, {
+		key: "lookupAnnotationLink",
+		value: function lookupAnnotationLink(activeAnnotations) {
+			var annotations = this.state.annotationData;
+			for (var i in annotations) {
+				if (annotations[i].type.name === "elab4:entrylink" && activeAnnotations.indexOf("" + annotations[i].n) > -1) {
+					return annotations[i].text;
+				}
+			}
+			return null;
+		}
+	}, {
+		key: "navigateToResult",
+		value: function navigateToResult(id) {
+			if (this.props.onNavigation) {
+				this.props.onNavigation(id);
+			}
+		}
+	}, {
 		key: "renderNode",
 		value: function renderNode(node, i) {
 			var className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ? HIGHLIGHT_CLASSNAME : null;
+
 			if (node.textContent) {
-				return _react2["default"].createElement(
+				var linkTarget = this.lookupAnnotationLink(node.activeAnnotations);
+
+				return linkTarget === null ? _react2["default"].createElement(
 					"span",
 					{ className: className || "", key: i },
+					node.textContent
+				) : _react2["default"].createElement(
+					"a",
+					{ className: className || "", key: i, onClick: this.navigateToResult.bind(this, linkTarget) },
 					node.textContent
 				);
 			} else {
@@ -8082,7 +8115,7 @@ var TextLayer = (function (_React$Component) {
 						if (node.attributes['data-id']) {
 							return _react2["default"].createElement(
 								"sup",
-								{ key: i, id: node.attributes['data-id'] + "-text" },
+								{ id: node.attributes['data-id'] + "-text", key: i },
 								_react2["default"].createElement(
 									"a",
 									{ href: "#" + node.attributes['data-id'],
@@ -8124,7 +8157,6 @@ var TextLayer = (function (_React$Component) {
 							{ key: i },
 							node.children.map(this.renderNode.bind(this))
 						);
-
 				}
 			}
 		}
@@ -8140,7 +8172,7 @@ var TextLayer = (function (_React$Component) {
 
 			return _react2["default"].createElement(
 				"div",
-				null,
+				{ className: "hi-textlayer" },
 				_react2["default"].createElement(
 					"h2",
 					null,

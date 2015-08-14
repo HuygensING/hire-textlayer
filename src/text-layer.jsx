@@ -5,14 +5,24 @@ import Annotations from "./annotations";
 
 const HIGHLIGHT_CLASSNAME = "hi-text-highlight";
 
+
+
 class TextLayer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {rootNode: parseHtml(this.props.data.text), highlightedAnnotation: null};
+		this.state = {
+			rootNode: parseHtml(this.props.data.text), 
+			highlightedAnnotation: null,
+			annotationData: this.props.data.annotationData
+		};
 	}
 
 	componentWillReceiveProps(newProps) {
-		this.setState({rootNode: parseHtml(newProps.data.text), highlightedAnnotation: null});
+		this.setState({
+			rootNode: parseHtml(newProps.data.text), 
+			highlightedAnnotation: null,
+			annotationData: this.props.data.annotationData
+		});
 	}
 
 	unHighlightAnnotation() {
@@ -23,18 +33,38 @@ class TextLayer extends React.Component {
 		this.setState({highlightedAnnotation: annotation});
 	}
 
+	lookupAnnotationLink(activeAnnotations) {
+		let annotations = this.state.annotationData;
+		for(let i in annotations) {
+			if(annotations[i].type.name === "elab4:entrylink" && activeAnnotations.indexOf("" + annotations[i].n) > -1) {
+				return annotations[i].text;
+			}
+		}
+		return null;
+	}
+
+	navigateToResult(id) {
+		if(this.props.onNavigation) { this.props.onNavigation(id); }
+	}
+
 	renderNode(node, i) {
 		let className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ?
 			HIGHLIGHT_CLASSNAME :
 			null;
+
 		if(node.textContent) {
-			return <span  className={className || ""} key={i}>{node.textContent}</span>
+			let linkTarget = this.lookupAnnotationLink(node.activeAnnotations);
+
+			return linkTarget === null ?
+				<span className={className || ""} key={i}>{node.textContent}</span> :
+				<a className={className || ""} key={i} onClick={this.navigateToResult.bind(this, linkTarget)}>{node.textContent}</a>;
+
 		} else {
 			switch(node.tagName) {
 				case "sup":
 					if(node.attributes['data-id']) {
 						return (
-							<sup key={i} id={node.attributes['data-id'] + "-text"} >
+							<sup id={node.attributes['data-id'] + "-text"} key={i}  >
 								<a href={"#" + node.attributes['data-id']}
 									onMouseOut={this.unHighlightAnnotation.bind(this)}
 									onMouseOver={this.highlightAnnotation.bind(this, node.attributes['data-id'])}>
@@ -55,7 +85,6 @@ class TextLayer extends React.Component {
 					return <br key={i} />;
 				default:
 					return <span key={i}>{node.children.map(this.renderNode.bind(this))}</span>;
-
 			}
 		}
 	}
@@ -71,7 +100,7 @@ class TextLayer extends React.Component {
 			"";
 
 		return (
-			<div>
+			<div className="hi-textlayer">
 				<h2>{this.props.label}</h2>
 				<div>
 					{this.state.rootNode.children.map(this.renderNode.bind(this)) }
