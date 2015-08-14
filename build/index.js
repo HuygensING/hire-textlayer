@@ -8061,7 +8061,7 @@ var TextLayer = (function (_React$Component) {
 			this.setState({
 				rootNode: (0, _htmlParser2["default"])(newProps.data.text),
 				highlightedAnnotation: null,
-				annotationData: this.props.data.annotationData
+				annotationData: newProps.data.annotationData
 			});
 		}
 	}, {

@@ -21,7 +21,7 @@ class TextLayer extends React.Component {
 		this.setState({
 			rootNode: parseHtml(newProps.data.text), 
 			highlightedAnnotation: null,
-			annotationData: this.props.data.annotationData
+			annotationData: newProps.data.annotationData
 		});
 	}
 
