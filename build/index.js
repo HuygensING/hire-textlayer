@@ -7851,13 +7851,6 @@ var Annotations = (function (_React$Component) {
 	}
 
 	_createClass(Annotations, [{
-		key: "navigateToResult",
-		value: function navigateToResult(id) {
-			if (this.props.onNavigation) {
-				this.props.onNavigation(id);
-			}
-		}
-	}, {
 		key: "onHover",
 		value: function onHover(annotationId) {
 			if (this.props.onHover) {
@@ -7865,15 +7858,23 @@ var Annotations = (function (_React$Component) {
 			}
 		}
 	}, {
+		key: "onClick",
+		value: function onClick(annotationId) {
+			if (this.props.onClick) {
+				this.props.onClick(annotationId + "-text");
+			}
+		}
+	}, {
 		key: "renderAnnotation",
 		value: function renderAnnotation(annotation, i) {
-			var inner = annotation.type.name === "elab4:entrylink" ? _react2["default"].createElement(
-				"a",
-				{ onClick: this.navigateToResult.bind(this, annotation.text) },
-				this.props.relatedLabel
-			) : _react2["default"].createElement(
-				"a",
-				{ href: "#" + annotation.n + "-text" },
+			return _react2["default"].createElement(
+				"li",
+				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null,
+					id: annotation.n,
+					key: i,
+					onClick: this.onClick.bind(this, annotation.n),
+					onMouseOut: this.onHover.bind(this, ""),
+					onMouseOver: this.onHover.bind(this, annotation.n) },
 				_react2["default"].createElement(
 					"em",
 					null,
@@ -7881,16 +7882,6 @@ var Annotations = (function (_React$Component) {
 				),
 				", ",
 				_react2["default"].createElement("span", { dangerouslySetInnerHTML: { __html: annotation.text } })
-			);
-
-			return _react2["default"].createElement(
-				"li",
-				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null,
-					id: annotation.n,
-					key: i,
-					onMouseOut: this.onHover.bind(this, ""),
-					onMouseOver: this.onHover.bind(this, annotation.n) },
-				inner
 			);
 		}
 	}, {
@@ -7910,8 +7901,8 @@ var Annotations = (function (_React$Component) {
 Annotations.propTypes = {
 	data: _react2["default"].PropTypes.array,
 	highlighted: _react2["default"].PropTypes.string,
+	onClick: _react2["default"].PropTypes.func,
 	onHover: _react2["default"].PropTypes.func,
-	onNavigation: _react2["default"].PropTypes.func,
 	relatedLabel: _react2["default"].PropTypes.string
 };
 
@@ -8004,7 +7995,7 @@ var _insertCss2 = _interopRequireDefault(_insertCss);
 
 
 
-var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9CgouaGktdGV4dGxheWVyIGEgewoJdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7CgljdXJzb3I6IHBvaW50ZXI7Cn0=","base64");
+var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgewoJYmFja2dyb3VuZC1jb2xvcjogI0ZGMAp9CgouaGktYW5ub3RhdGlvbnMgewoJYm9yZGVyLXRvcDogMXB4IGRvdHRlZCAjYWFhOwoJbWFyZ2luLXRvcDogMTJweDsKCXBhZGRpbmctdG9wOiAxMnB4Owp9CgouaGktYW5ub3RhdGlvbnMgbGkgewoJY3Vyc29yOiBwb2ludGVyOwp9CgouaGktdGV4dGxheWVyIGEgewoJY3Vyc29yOiBwb2ludGVyOwp9CgouaGktdGV4dGxheWVyICogewoJdHJhbnNpdGlvbjogYmFja2dyb3VuZC1jb2xvciAwLjZzOwp9","base64");
 (0, _insertCss2["default"])(css, { prepend: true });
 
 exports["default"] = _textLayer2["default"];
@@ -8093,6 +8084,19 @@ var TextLayer = (function (_React$Component) {
 			}
 		}
 	}, {
+		key: "onAnnotationClick",
+		value: function onAnnotationClick(annotationId) {
+			var annotatedText = document.getElementById(annotationId);
+			if (!annotatedText) {
+				return;
+			}
+			if (this.props.onAnnotationClick) {
+				this.props.onAnnotationClick(annotatedText);
+			} else {
+				window.scrollTo(0, window.scrollY + annotatedText.getBoundingClientRect().top);
+			}
+		}
+	}, {
 		key: "renderNode",
 		value: function renderNode(node, i) {
 			var className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ? HIGHLIGHT_CLASSNAME : null;
@@ -8118,7 +8122,7 @@ var TextLayer = (function (_React$Component) {
 								{ id: node.attributes['data-id'] + "-text", key: i },
 								_react2["default"].createElement(
 									"a",
-									{ href: "#" + node.attributes['data-id'],
+									{ onClick: this.onAnnotationClick.bind(this, node.attributes['data-id']),
 										onMouseOut: this.unHighlightAnnotation.bind(this),
 										onMouseOver: this.highlightAnnotation.bind(this, node.attributes['data-id']) },
 									node.children.map(this.renderNode.bind(this))
@@ -8166,6 +8170,7 @@ var TextLayer = (function (_React$Component) {
 			var annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? _react2["default"].createElement(_annotations2["default"], {
 				data: this.props.data.annotationData,
 				highlighted: this.state.highlightedAnnotation,
+				onClick: this.onAnnotationClick.bind(this),
 				onHover: this.highlightAnnotation.bind(this),
 				onNavigation: this.props.onNavigation,
 				relatedLabel: this.props.relatedAnnotationLabel }) : "";
@@ -8194,6 +8199,7 @@ var TextLayer = (function (_React$Component) {
 TextLayer.propTypes = {
 	data: _react2["default"].PropTypes.object,
 	label: _react2["default"].PropTypes.string,
+	onAnnotationClick: _react2["default"].PropTypes.func,
 	onNavigation: _react2["default"].PropTypes.func,
 	relatedAnnotationLabel: _react2["default"].PropTypes.string
 };

@@ -47,6 +47,16 @@ class TextLayer extends React.Component {
 		if(this.props.onNavigation) { this.props.onNavigation(id); }
 	}
 
+	onAnnotationClick(annotationId) {
+		let annotatedText = document.getElementById(annotationId);
+		if(!annotatedText) { return; }
+		if(this.props.onAnnotationClick) {
+			this.props.onAnnotationClick(annotatedText);
+		} else {
+			window.scrollTo(0, window.scrollY + annotatedText.getBoundingClientRect().top);
+		}
+	}
+
 	renderNode(node, i) {
 		let className = node.activeAnnotations.indexOf(this.state.highlightedAnnotation) > -1 ?
 			HIGHLIGHT_CLASSNAME :
@@ -65,7 +75,7 @@ class TextLayer extends React.Component {
 					if(node.attributes['data-id']) {
 						return (
 							<sup id={node.attributes['data-id'] + "-text"} key={i}  >
-								<a href={"#" + node.attributes['data-id']}
+								<a onClick={this.onAnnotationClick.bind(this, node.attributes['data-id'])}
 									onMouseOut={this.unHighlightAnnotation.bind(this)}
 									onMouseOver={this.highlightAnnotation.bind(this, node.attributes['data-id'])}>
 									{node.children.map(this.renderNode.bind(this))}
@@ -94,6 +104,7 @@ class TextLayer extends React.Component {
 			(<Annotations 
 				data={this.props.data.annotationData} 
 				highlighted={this.state.highlightedAnnotation}
+				onClick={this.onAnnotationClick.bind(this)}
 				onHover={this.highlightAnnotation.bind(this)}
 				onNavigation={this.props.onNavigation}
 				relatedLabel={this.props.relatedAnnotationLabel}  />) :
@@ -114,6 +125,7 @@ class TextLayer extends React.Component {
 TextLayer.propTypes = {
 	data: React.PropTypes.object,
 	label: React.PropTypes.string,
+	onAnnotationClick: React.PropTypes.func,
 	onNavigation: React.PropTypes.func,
 	relatedAnnotationLabel: React.PropTypes.string
 };

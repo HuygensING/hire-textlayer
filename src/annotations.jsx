@@ -5,26 +5,23 @@ const HIGHLIGHT_CLASSNAME = "hi-annotation-highlight";
 
 class Annotations extends React.Component {
 
-	navigateToResult(id) {
-		if(this.props.onNavigation) { this.props.onNavigation(id); }
-	}
-
 	onHover(annotationId) {
 		if(this.props.onHover) { this.props.onHover("" + annotationId); }
 	}
 
-	renderAnnotation(annotation, i) {
-		let inner = annotation.type.name === "elab4:entrylink" ?
-			<a onClick={this.navigateToResult.bind(this, annotation.text)}>{this.props.relatedLabel}</a> :
-			<a href={"#" + annotation.n + "-text"} ><em>{annotation.type.name}</em>, <span dangerouslySetInnerHTML={{__html: annotation.text}} /></a>;
+	onClick(annotationId) {
+		if(this.props.onClick) { this.props.onClick(annotationId + "-text"); }
+	}
 
+	renderAnnotation(annotation, i) {
 		return (
 			<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} 
 				id={annotation.n} 
 				key={i}
+				onClick={this.onClick.bind(this, annotation.n)} 
 				onMouseOut={this.onHover.bind(this, "")}
 				onMouseOver={this.onHover.bind(this, annotation.n)}>
-				{inner}
+				<em>{annotation.type.name}</em>, <span dangerouslySetInnerHTML={{__html: annotation.text}} />
 			</li>
 		);
 	}
@@ -41,8 +38,8 @@ class Annotations extends React.Component {
 Annotations.propTypes = {
 	data: React.PropTypes.array,
 	highlighted: React.PropTypes.string,
+	onClick:  React.PropTypes.func,
 	onHover: React.PropTypes.func,
-	onNavigation: React.PropTypes.func,
 	relatedLabel: React.PropTypes.string
 };
 
