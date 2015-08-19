@@ -1,3 +1,6 @@
+### v1.4.0	(2015/8/19 14:41)
+* replaced hash link with onAnnotationClick callback
+
 ### v1.3.1	(2015/8/14 14:55)
 * bugfix annotationData in componentwillreceivenewprops
 
