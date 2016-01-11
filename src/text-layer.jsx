@@ -2,10 +2,7 @@ import React from "react";
 import parseHtml from "./html-parser";
 import Annotations from "./annotations";
 
-
 const HIGHLIGHT_CLASSNAME = "hi-text-highlight";
-
-
 
 class TextLayer extends React.Component {
 	constructor(props) {
