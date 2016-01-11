@@ -7784,6 +7784,78 @@ var _react2 = _interopRequireDefault(_react);
 
 var HIGHLIGHT_CLASSNAME = "hi-annotation-highlight";
 
+var Annotation = (function (_React$Component) {
+	_inherits(Annotation, _React$Component);
+
+	function Annotation() {
+		_classCallCheck(this, Annotation);
+
+		_get(Object.getPrototypeOf(Annotation.prototype), "constructor", this).apply(this, arguments);
+	}
+
+	_createClass(Annotation, [{
+		key: "render",
+		value: function render() {
+			return _react2["default"].createElement(
+				"li",
+				{ className: this.props.highlighted ? HIGHLIGHT_CLASSNAME : "",
+					id: this.props.n,
+					onClick: this.props.onClick.bind(this, this.props.n),
+					onMouseOut: this.props.onHover.bind(this, ""),
+					onMouseOver: this.props.onHover.bind(this, this.props.n) },
+				_react2["default"].createElement(
+					"em",
+					null,
+					this.props.type.name
+				),
+				", ",
+				_react2["default"].createElement("span", { dangerouslySetInnerHTML: { __html: this.props.text } })
+			);
+		}
+	}]);
+
+	return Annotation;
+})(_react2["default"].Component);
+
+Annotation.propTypes = {
+	highlighted: _react2["default"].PropTypes.bool,
+	n: _react2["default"].PropTypes.string,
+	onClick: _react2["default"].PropTypes.func,
+	onHover: _react2["default"].PropTypes.func,
+	text: _react2["default"].PropTypes.string,
+	type: _react2["default"].PropTypes.object
+};
+
+exports["default"] = Annotation;
+module.exports = exports["default"];
+
+},{"react":"react"}],57:[function(_dereq_,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = _dereq_("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _annotation = _dereq_("./annotation");
+
+var _annotation2 = _interopRequireDefault(_annotation);
+
 var Annotations = (function (_React$Component) {
 	_inherits(Annotations, _React$Component);
 
@@ -7810,22 +7882,12 @@ var Annotations = (function (_React$Component) {
 	}, {
 		key: "renderAnnotation",
 		value: function renderAnnotation(annotation, i) {
-			return _react2["default"].createElement(
-				"li",
-				{ className: this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null,
-					id: annotation.n,
-					key: i,
-					onClick: this.onClick.bind(this, annotation.n),
-					onMouseOut: this.onHover.bind(this, ""),
-					onMouseOver: this.onHover.bind(this, annotation.n) },
-				_react2["default"].createElement(
-					"em",
-					null,
-					annotation.type.name
-				),
-				", ",
-				_react2["default"].createElement("span", { dangerouslySetInnerHTML: { __html: annotation.text } })
-			);
+			return _react2["default"].createElement(_annotation2["default"], _extends({}, annotation, {
+				highlighted: this.props.highlighted == annotation.n,
+				key: i,
+				onClick: this.onClick.bind(this),
+				onHover: this.onHover.bind(this)
+			}));
 		}
 	}, {
 		key: "render",
@@ -7852,7 +7914,7 @@ Annotations.propTypes = {
 exports["default"] = Annotations;
 module.exports = exports["default"];
 
-},{"react":"react"}],57:[function(_dereq_,module,exports){
+},{"./annotation":56,"react":"react"}],58:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7918,7 +7980,7 @@ var elabHtmlParser = function elabHtmlParser(html) {
 exports["default"] = elabHtmlParser;
 module.exports = exports["default"];
 
-},{"htmlparser2":8}],58:[function(_dereq_,module,exports){
+},{"htmlparser2":8}],59:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7943,7 +8005,7 @@ var css = Buffer("LmhpLWFubm90YXRpb24taGlnaGxpZ2h0LAouaGktdGV4dC1oaWdobGlnaHQgew
 exports["default"] = _textLayer2["default"];
 module.exports = exports["default"];
 
-},{"./text-layer":59,"insert-css":30}],59:[function(_dereq_,module,exports){
+},{"./text-layer":60,"insert-css":30}],60:[function(_dereq_,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8153,5 +8215,5 @@ TextLayer.defaultProps = {
 exports["default"] = TextLayer;
 module.exports = exports["default"];
 
-},{"./annotations":56,"./html-parser":57,"react":"react"}]},{},[58])(58)
+},{"./annotations":57,"./html-parser":58,"react":"react"}]},{},[59])(59)
 });

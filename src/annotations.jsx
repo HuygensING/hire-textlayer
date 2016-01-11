@@ -1,7 +1,5 @@
 import React from "react";
-
-
-const HIGHLIGHT_CLASSNAME = "hi-annotation-highlight";
+import Annotation from "./annotation";
 
 class Annotations extends React.Component {
 
@@ -15,14 +13,13 @@ class Annotations extends React.Component {
 
 	renderAnnotation(annotation, i) {
 		return (
-			<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null}
-				id={annotation.n}
+			<Annotation
+				{...annotation}
+				highlighted={this.props.highlighted == annotation.n}
 				key={i}
-				onClick={this.onClick.bind(this, annotation.n)}
-				onMouseOut={this.onHover.bind(this, "")}
-				onMouseOver={this.onHover.bind(this, annotation.n)}>
-				<em>{annotation.type.name}</em>, <span dangerouslySetInnerHTML={{__html: annotation.text}} />
-			</li>
+				onClick={this.onClick.bind(this)}
+				onHover={this.onHover.bind(this)}
+			/>
 		);
 	}
 
