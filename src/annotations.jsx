@@ -15,10 +15,10 @@ class Annotations extends React.Component {
 
 	renderAnnotation(annotation, i) {
 		return (
-			<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null} 
-				id={annotation.n} 
+			<li className={this.props.highlighted == annotation.n ? HIGHLIGHT_CLASSNAME : null}
+				id={annotation.n}
 				key={i}
-				onClick={this.onClick.bind(this, annotation.n)} 
+				onClick={this.onClick.bind(this, annotation.n)}
 				onMouseOut={this.onHover.bind(this, "")}
 				onMouseOver={this.onHover.bind(this, annotation.n)}>
 				<em>{annotation.type.name}</em>, <span dangerouslySetInnerHTML={{__html: annotation.text}} />
@@ -31,14 +31,14 @@ class Annotations extends React.Component {
 			<ol className="hi-annotations">
 				{this.props.data.map(this.renderAnnotation.bind(this))}
 			</ol>
-		)
+		);
 	}
 }
 
 Annotations.propTypes = {
 	data: React.PropTypes.array,
 	highlighted: React.PropTypes.string,
-	onClick:  React.PropTypes.func,
+	onClick: React.PropTypes.func,
 	onHover: React.PropTypes.func,
 	relatedLabel: React.PropTypes.string
 };
