@@ -1,3 +1,11 @@
+### v1.5.0	(2016/1/11 10:15)
+* expose customComponentMap for annotation render
+* separate annotation component from annotations component
+* fixes linter warnings
+* fixes linter warnings
+* fixes linter warnings
+* added eslintrc to project
+
 ### v1.4.0	(2015/8/19 14:41)
 * replaced hash link with onAnnotationClick callback
 
