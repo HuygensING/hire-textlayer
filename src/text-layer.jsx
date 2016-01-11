@@ -8,7 +8,7 @@ class TextLayer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			rootNode: parseHtml(this.props.data.text), 
+			rootNode: parseHtml(this.props.data.text),
 			highlightedAnnotation: null,
 			annotationData: this.props.data.annotationData
 		};
@@ -16,7 +16,7 @@ class TextLayer extends React.Component {
 
 	componentWillReceiveProps(newProps) {
 		this.setState({
-			rootNode: parseHtml(newProps.data.text), 
+			rootNode: parseHtml(newProps.data.text),
 			highlightedAnnotation: null,
 			annotationData: newProps.data.annotationData
 		});
@@ -69,19 +69,18 @@ class TextLayer extends React.Component {
 		} else {
 			switch(node.tagName) {
 				case "sup":
-					if(node.attributes['data-id']) {
+					if(node.attributes["data-id"]) {
 						return (
-							<sup id={node.attributes['data-id'] + "-text"} key={i}  >
-								<a onClick={this.onAnnotationClick.bind(this, node.attributes['data-id'])}
+							<sup id={node.attributes["data-id"] + "-text"} key={i} >
+								<a onClick={this.onAnnotationClick.bind(this, node.attributes["data-id"])}
 									onMouseOut={this.unHighlightAnnotation.bind(this)}
-									onMouseOver={this.highlightAnnotation.bind(this, node.attributes['data-id'])}>
+									onMouseOver={this.highlightAnnotation.bind(this, node.attributes["data-id"])}>
 									{node.children.map(this.renderNode.bind(this))}
 								</a>
 							</sup>
 						);
-					} else {
-						return <sup key={i}>{node.children.map(this.renderNode.bind(this))}</sup>;
 					}
+					return <sup key={i}>{node.children.map(this.renderNode.bind(this))}</sup>;
 				case "i":
 					return <i key={i}>{node.children.map(this.renderNode.bind(this))}</i>;
 				case "b":
@@ -97,14 +96,14 @@ class TextLayer extends React.Component {
 	}
 
 	render() {
-		let annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? 
-			(<Annotations 
-				data={this.props.data.annotationData} 
+		let annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ?
+			(<Annotations
+				data={this.props.data.annotationData}
 				highlighted={this.state.highlightedAnnotation}
 				onClick={this.onAnnotationClick.bind(this)}
 				onHover={this.highlightAnnotation.bind(this)}
 				onNavigation={this.props.onNavigation}
-				relatedLabel={this.props.relatedAnnotationLabel}  />) :
+				relatedLabel={this.props.relatedAnnotationLabel} />) :
 			"";
 
 		return (

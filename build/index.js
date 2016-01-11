@@ -8059,25 +8059,24 @@ var TextLayer = (function (_React$Component) {
 			} else {
 				switch (node.tagName) {
 					case "sup":
-						if (node.attributes['data-id']) {
+						if (node.attributes["data-id"]) {
 							return _react2["default"].createElement(
 								"sup",
-								{ id: node.attributes['data-id'] + "-text", key: i },
+								{ id: node.attributes["data-id"] + "-text", key: i },
 								_react2["default"].createElement(
 									"a",
-									{ onClick: this.onAnnotationClick.bind(this, node.attributes['data-id']),
+									{ onClick: this.onAnnotationClick.bind(this, node.attributes["data-id"]),
 										onMouseOut: this.unHighlightAnnotation.bind(this),
-										onMouseOver: this.highlightAnnotation.bind(this, node.attributes['data-id']) },
+										onMouseOver: this.highlightAnnotation.bind(this, node.attributes["data-id"]) },
 									node.children.map(this.renderNode.bind(this))
 								)
 							);
-						} else {
-							return _react2["default"].createElement(
-								"sup",
-								{ key: i },
-								node.children.map(this.renderNode.bind(this))
-							);
 						}
+						return _react2["default"].createElement(
+							"sup",
+							{ key: i },
+							node.children.map(this.renderNode.bind(this))
+						);
 					case "i":
 						return _react2["default"].createElement(
 							"i",

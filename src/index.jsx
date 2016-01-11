@@ -1,4 +1,4 @@
-import TextLayer from "./text-layer"
+import TextLayer from "./text-layer";
 let fs = require("fs");
 
 import insertCss from "insert-css";
