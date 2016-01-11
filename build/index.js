@@ -7886,12 +7886,11 @@ var elabHtmlParser = function elabHtmlParser(html) {
 		},
 
 		onopentag: function onopentag(name, attr) {
-
-			if (attr['data-marker'] && attr['data-id']) {
-				if (attr['data-marker'] === 'begin') {
-					activeAnnotations.push(attr['data-id']);
-				} else if (attr['data-marker'] === 'end') {
-					activeAnnotations.splice(activeAnnotations.indexOf(attr['data-id']), 1);
+			if (attr["data-marker"] && attr["data-id"]) {
+				if (attr["data-marker"] === "begin") {
+					activeAnnotations.push(attr["data-id"]);
+				} else if (attr["data-marker"] === "end") {
+					activeAnnotations.splice(activeAnnotations.indexOf(attr["data-id"]), 1);
 				}
 			}
 
@@ -7906,7 +7905,7 @@ var elabHtmlParser = function elabHtmlParser(html) {
 			currentNode = childNode;
 		},
 
-		onclosetag: function onclosetag(name) {
+		onclosetag: function onclosetag() {
 			currentNode = currentNode.parent;
 		}
 	}, { decodeEntities: true });

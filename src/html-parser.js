@@ -19,15 +19,12 @@ let elabHtmlParser = function(html) {
 			});
 		},
 
-
-
 		onopentag: function(name, attr) {
-
-			if(attr['data-marker'] && attr['data-id']) {
-				if(attr['data-marker'] === 'begin') {
-					activeAnnotations.push(attr['data-id']);
-				} else if(attr['data-marker'] === 'end') {
-					activeAnnotations.splice(activeAnnotations.indexOf(attr['data-id']), 1);
+			if(attr["data-marker"] && attr["data-id"]) {
+				if(attr["data-marker"] === "begin") {
+					activeAnnotations.push(attr["data-id"]);
+				} else if(attr["data-marker"] === "end") {
+					activeAnnotations.splice(activeAnnotations.indexOf(attr["data-id"]), 1);
 				}
 			}
 
@@ -36,15 +33,13 @@ let elabHtmlParser = function(html) {
 				tagName: name,
 				parent: currentNode,
 				attributes: attr,
-				activeAnnotations: activeAnnotations.slice(),
+				activeAnnotations: activeAnnotations.slice()
 			};
 			currentNode.children.push(childNode);
 			currentNode = childNode;
 		},
 
-
-
-		onclosetag: function(name) {
+		onclosetag: function() {
 			currentNode = currentNode.parent;
 		}
 	}, {decodeEntities: true});
@@ -52,6 +47,6 @@ let elabHtmlParser = function(html) {
 	parser.write(html);
 	parser.end();
 	return rootNode;
-}
+};
 
 export default elabHtmlParser;
