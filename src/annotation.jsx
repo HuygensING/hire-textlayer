@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const HIGHLIGHT_CLASSNAME = "hi-annotation-highlight";
 
 class Annotation extends React.Component {
@@ -20,7 +19,7 @@ class Annotation extends React.Component {
 
 Annotation.propTypes = {
 	highlighted: React.PropTypes.bool,
-	n: React.PropTypes.string,
+	n: React.PropTypes.number,
 	onClick: React.PropTypes.func,
 	onHover: React.PropTypes.func,
 	text: React.PropTypes.string,

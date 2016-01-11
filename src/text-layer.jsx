@@ -98,6 +98,7 @@ class TextLayer extends React.Component {
 	render() {
 		let annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ?
 			(<Annotations
+				customComponentMap={this.props.customComponentMap}
 				data={this.props.data.annotationData}
 				highlighted={this.state.highlightedAnnotation}
 				onClick={this.onAnnotationClick.bind(this)}
@@ -119,6 +120,7 @@ class TextLayer extends React.Component {
 }
 
 TextLayer.propTypes = {
+	customComponentMap: React.PropTypes.object,
 	data: React.PropTypes.object,
 	label: React.PropTypes.string,
 	onAnnotationClick: React.PropTypes.func,

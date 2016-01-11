@@ -12,8 +12,10 @@ class Annotations extends React.Component {
 	}
 
 	renderAnnotation(annotation, i) {
+		let AnnotationComponent = this.props.customComponentMap && this.props.customComponentMap[annotation.type.name] ?
+			this.props.customComponentMap[annotation.type.name] : Annotation;
 		return (
-			<Annotation
+			<AnnotationComponent
 				{...annotation}
 				highlighted={this.props.highlighted == annotation.n}
 				key={i}
@@ -33,6 +35,7 @@ class Annotations extends React.Component {
 }
 
 Annotations.propTypes = {
+	customComponentMap: React.PropTypes.object,
 	data: React.PropTypes.array,
 	highlighted: React.PropTypes.string,
 	onClick: React.PropTypes.func,

@@ -7819,7 +7819,7 @@ var Annotation = (function (_React$Component) {
 
 Annotation.propTypes = {
 	highlighted: _react2["default"].PropTypes.bool,
-	n: _react2["default"].PropTypes.string,
+	n: _react2["default"].PropTypes.number,
 	onClick: _react2["default"].PropTypes.func,
 	onHover: _react2["default"].PropTypes.func,
 	text: _react2["default"].PropTypes.string,
@@ -7882,7 +7882,8 @@ var Annotations = (function (_React$Component) {
 	}, {
 		key: "renderAnnotation",
 		value: function renderAnnotation(annotation, i) {
-			return _react2["default"].createElement(_annotation2["default"], _extends({}, annotation, {
+			var AnnotationComponent = this.props.customComponentMap && this.props.customComponentMap[annotation.type.name] ? this.props.customComponentMap[annotation.type.name] : _annotation2["default"];
+			return _react2["default"].createElement(AnnotationComponent, _extends({}, annotation, {
 				highlighted: this.props.highlighted == annotation.n,
 				key: i,
 				onClick: this.onClick.bind(this),
@@ -7904,6 +7905,7 @@ var Annotations = (function (_React$Component) {
 })(_react2["default"].Component);
 
 Annotations.propTypes = {
+	customComponentMap: _react2["default"].PropTypes.object,
 	data: _react2["default"].PropTypes.array,
 	highlighted: _react2["default"].PropTypes.string,
 	onClick: _react2["default"].PropTypes.func,
@@ -8171,6 +8173,7 @@ var TextLayer = (function (_React$Component) {
 		key: "render",
 		value: function render() {
 			var annotations = this.props.data.annotationData && this.props.data.annotationData.length > 0 ? _react2["default"].createElement(_annotations2["default"], {
+				customComponentMap: this.props.customComponentMap,
 				data: this.props.data.annotationData,
 				highlighted: this.state.highlightedAnnotation,
 				onClick: this.onAnnotationClick.bind(this),
@@ -8200,6 +8203,7 @@ var TextLayer = (function (_React$Component) {
 })(_react2["default"].Component);
 
 TextLayer.propTypes = {
+	customComponentMap: _react2["default"].PropTypes.object,
 	data: _react2["default"].PropTypes.object,
 	label: _react2["default"].PropTypes.string,
 	onAnnotationClick: _react2["default"].PropTypes.func,
